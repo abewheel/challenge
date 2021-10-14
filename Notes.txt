@@ -1,0 +1,27 @@
+DESIGN NOTES
+------------
+
+CONTROLLERS
+- I like to distinguish between internal API calls and external ones and have put the 
+GeoController inside 'module API' and created two endpoints:
+
+  GET /api/geo
+  GET /api/ips
+
+DATABASE/MODELS
+- None for this prototype.
+
+CACHE
+I had a simple cache implementation based on Redis and wanted to use that. But one
+of the project requirements was to return everything in the cache (all IP's) and
+I didn't see an easy way for Redis to do this; we'd have to get all the keys and look up the
+values one by one. I didn't want to spend any more time and decided to use a global hash instead.
+
+ISSUES
+- RestClient::SSLCertificateNotVerified
+I ran into this issue in /lib/geo_js.rb and the best solution is to have actual certificates in place. 
+One of the fastest ways of doing this is to have self-signed certs, but that didn't work. So I had to
+made a comprimise and verify SSL only when in production mode (on Heroku).
+
+
+
