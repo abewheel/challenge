@@ -18,8 +18,7 @@ class GeoJS
     # gjs.get(params: { ip: ips })
 
     # Don't verify SSL when running locally; this is often problematic.
-    verify_ssl = ENV['RACK_ENV'] == 'production' ? true : false
-    gjs = RestClient::Resource.new(ENDPOINT[:geo], verify_ssl: verify_ssl)
+    gjs = RestClient::Resource.new(ENDPOINT[:geo], verify_ssl: (ENV['RACK_ENV'] == 'production'))
     response = gjs.get(params: { ip: ips })
     JSON.parse(response)
   end

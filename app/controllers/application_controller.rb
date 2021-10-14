@@ -53,8 +53,7 @@ class ApplicationController < Sinatra::Base
   end
 
   error do
-    puts env.inspect
-    respond({ error: "final error block" })
+    respond({ error: "Something went wrong." })
   end
 
   helpers do
