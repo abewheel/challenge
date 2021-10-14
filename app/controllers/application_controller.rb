@@ -1,6 +1,7 @@
 class ApplicationController < Sinatra::Base
   register Sinatra::Flash
-
+  set :show_exceptions, false
+  
   SAFE_PATHS = [
     '/', '/login', '/logout', '/ping', '/public', 
     '/api/geo', '/api/ips'
@@ -39,16 +40,21 @@ class ApplicationController < Sinatra::Base
 
   # Trap all internal errors.
   error 403 do
-    respond({ error: response.body })
+    respond({ error: response.body[0] })
   end
 
   error 500 do
-    respond({ error: response.body })
+    respond({ error: response.body[0] })
   end
 
   # Not found catch.
   not_found do
     respond({ error: '404 Not Found'})
+  end
+
+  error do
+    puts env.inspect
+    respond({ error: "final error block" })
   end
 
   helpers do

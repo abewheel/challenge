@@ -31,7 +31,7 @@ module API
     helpers do
       def validate_ip(ip)
         # Quick and dirty error checking on the ip address format.
-        raise "Invalid IPv4 address: #{ip}" unless ip =~ /^[1-9][0-9]*\.[1-9][0-9]*\.[1-9][0-9]*\.[1-9][0-9]*/
+        halt 500, "Invalid IPv4 address: #{ip}" unless ip =~ /^[1-9][0-9]*\.[1-9][0-9]*\.[1-9][0-9]*\.[1-9][0-9]*$/
 
         return ip
       end
